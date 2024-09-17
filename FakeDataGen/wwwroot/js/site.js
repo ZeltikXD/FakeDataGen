@@ -11,10 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < rows.length; i++) {
 
             // Get each column data
-            let cols = rows[i].querySelectorAll('td,th');
+            const cols = rows[i].querySelectorAll('td,th');
 
             // Stores each csv row data
-            let csvrow = [];
+            const csvrow = [];
             for (let j = 0; j < cols.length; j++) {
                 // Get the text data of each cell
                 let cellData = cols[j].innerText;
@@ -41,12 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function downloadCSVFile(csv_data) {
-        CSVFile = new Blob([csv_data], { type: "text/csv" });
         const temp_link = document.createElement('a');
 
         temp_link.download = "exported.csv";
-        const url = window.URL.createObjectURL(CSVFile);
-        temp_link.href = url;
+        temp_link.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURI(csv_data);
 
         temp_link.style.display = "none";
         document.body.appendChild(temp_link);
