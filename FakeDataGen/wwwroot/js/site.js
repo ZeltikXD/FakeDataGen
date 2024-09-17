@@ -4,10 +4,10 @@ const INT_MAX = 2147483647;
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('generate_csv').addEventListener('click', () => {
         // Variable to store the final csv data
-        let csv_data = [];
+        const csv_data = [];
 
         // Get each row data
-        let rows = document.getElementsByTagName('tr');
+        const rows = document.getElementsByTagName('tr');
         for (let i = 0; i < rows.length; i++) {
 
             // Get each column data
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadMoreData();
 
-    window.addEventListener('scrollend', () => {
+    window.addEventListener('scroll', () => {
         if (window.scrollY + window.innerHeight >= container.offsetTop + container.offsetHeight) {
             if (!isLoading && !allDataLoaded) {
                 loadMoreData();
