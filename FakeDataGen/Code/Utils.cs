@@ -4,14 +4,8 @@ namespace FakeDataGen.Code
 {
     public static class Utils
     {
-        public static string FixCountryFullAddress(this Address address)
-        {
-            var street = address.StreetAddress();
-            var city = address.City();
-            var state = address.State();
-            var country = GetCountry(GetLocale(address.Locale));
-            return $"{street}, {city}, {state}, {country}";
-        }
+        public static string LocalizedCountry(this Address address)
+            => GetCountry(GetLocale(address.Locale));
 
         public static string GetCountry(Locale locale)
             => (locale) switch

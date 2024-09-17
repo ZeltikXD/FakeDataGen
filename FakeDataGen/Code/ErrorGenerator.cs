@@ -1,8 +1,9 @@
-﻿namespace FakeDataGen.Code
+﻿using System.Security.Cryptography;
+
+namespace FakeDataGen.Code
 {
     public static class ErrorGenerator
     {
-        private static readonly Random _random = Random.Shared;
         private static readonly IReadOnlyDictionary<Locale, string> _alphabet = new Dictionary<Locale, string>()
         {
             { Locale.EN, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" },
@@ -14,7 +15,7 @@
         {
             if (errorProbability == 0) return input;
 
-            if (_random.NextDouble() <= errorProbability)
+            if (Random.Shared.NextDouble() <= (errorProbability * 0.01))
             {
                 int errorCount = (int)Math.Ceiling(errorProbability * maxErrors);
                 return ApplyError(input, errorCount, locale);
@@ -26,7 +27,7 @@
         {
             for (int i = 0; i < errorCount; i++)
             {
-                int errorType = _random.Next(0, 3);
+                int errorType = RandomNumberGenerator.GetInt32(0, 3);
                 input = errorType switch
                 {
                     0 => RemoveRandomCharacter(input),
@@ -42,14 +43,14 @@
         {
             if (string.IsNullOrEmpty(input)) return input;
 
-            int index = _random.Next(0, input.Length);
+            int index = RandomNumberGenerator.GetInt32(0, input.Length);
             return input.Remove(index, 1);
         }
 
         private static string AddRandomCharacter(string input, Locale locale)
         {
-            int index = _random.Next(0, input.Length + 1);
-            char randomChar = _alphabet[locale][_random.Next(_alphabet[locale].Length)];
+            int index = RandomNumberGenerator.GetInt32(0, input.Length + 1);
+            char randomChar = _alphabet[locale][RandomNumberGenerator.GetInt32(_alphabet[locale].Length)];
 
             return input.Insert(index, randomChar.ToString());
         }
@@ -58,7 +59,7 @@
         {
             if (input.Length < 2) return input;
 
-            int index = _random.Next(0, input.Length - 1);
+            int index = RandomNumberGenerator.GetInt32(0, input.Length - 1);
 
             char[] chars = input.ToCharArray();
             (chars[index], chars[index + 1]) = (chars[index + 1], chars[index]);

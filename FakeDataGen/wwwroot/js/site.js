@@ -4,7 +4,7 @@ const INT_MAX = 2147483647;
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('generate_csv').addEventListener('click', () => {
         // Variable to store the final csv data
-        const csv_data = [];
+        let csv_data = [];
 
         // Get each row data
         const rows = document.getElementsByTagName('tr');
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadMoreData() {
         isLoading = true;
         const seed = seedInput.value;
-        const errorProb = rangeInput.value;
+        const errorProb = numberInput.value;
         const locale = locSelect.value;
 
         fetch(`/api/persons?page=${currentPage}&size=${pageSize}&seed=${seed}&errorProb=${errorProb}&locale=${locale}`)
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${row.index + 1}</td>
             <td>${row.identifier}</td>
             <td>${row.fullName}</td>
-            <td>${row.address}</td>
+            <td>${row.fullAddress}</td>
             <td>${row.phoneNumber}</td>
         `;
             tableBody.appendChild(newRow);

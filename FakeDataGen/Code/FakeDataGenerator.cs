@@ -29,7 +29,10 @@ namespace FakeDataGen.Code
         {
             person.FirstName = ErrorGenerator.ApplyErrorsWithProbability(person.FirstName, errorProb, 1, GetLocale());
             person.LastName = ErrorGenerator.ApplyErrorsWithProbability(person.LastName, errorProb, 1, GetLocale());
-            person.Address = ErrorGenerator.ApplyErrorsWithProbability(person.Address, errorProb, 1, GetLocale());
+            person.StreetAddress = ErrorGenerator.ApplyErrorsWithProbability(person.StreetAddress, errorProb, 1, GetLocale());
+            person.City = ErrorGenerator.ApplyErrorsWithProbability(person.City, errorProb, 1, GetLocale());
+            person.State = ErrorGenerator.ApplyErrorsWithProbability(person.State, errorProb, 1, GetLocale());
+            person.Country = ErrorGenerator.ApplyErrorsWithProbability(person.Country, errorProb, 1, GetLocale());
             person.PhoneNumber = ErrorGenerator.ApplyErrorsWithProbability(person.PhoneNumber, errorProb, 1, GetLocale());
         }
 
@@ -53,7 +56,10 @@ namespace FakeDataGen.Code
                 .RuleFor(p => p.LastName, (f, p) => f.Name.LastName())
                 .RuleFor(p => p.Identifier, (f, p) => f.Random.Guid())
                 .RuleFor(p => p.Index, f => index++)
-                .RuleFor(p => p.Address, f => f.Address.FixCountryFullAddress())
+                .RuleFor(p => p.StreetAddress, f => f.Address.StreetAddress())
+                .RuleFor(p => p.State, f => f.Address.State())
+                .RuleFor(p => p.City, f => f.Address.City())
+                .RuleFor(p => p.Country, f => f.Address.LocalizedCountry())
                 .RuleFor(p => p.PhoneNumber, f => f.Phone.PhoneNumber()));
         }
 
